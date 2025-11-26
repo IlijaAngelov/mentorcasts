@@ -16,4 +16,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
+// using blade
+Route::view('conversation', 'conversation')
+    ->name('conversation');
+
+Route::get('/conversations', function () {
+    return Inertia::render('Conversations');
+});
+
 require __DIR__.'/settings.php';
