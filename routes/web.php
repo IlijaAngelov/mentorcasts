@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConversationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -16,12 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-// using blade
-Route::view('conversation', 'conversation')
-    ->name('conversation');
-
-Route::get('/conversations', function () {
-    return Inertia::render('Conversations');
-});
+Route::get('/conversations', [ConversationController::class, 'index'])->name('conversations');
+Route::post('/conversations', [ConversationController::class, 'store'])->name('conversations.store');
 
 require __DIR__.'/settings.php';
