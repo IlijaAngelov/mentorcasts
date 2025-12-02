@@ -17,8 +17,7 @@ class Conversation extends Model
 
     protected $fillable = [
         'message',
-        'video_path',
-        'audio_path',
+        'user_id',
     ];
 
     public function user(): BelongsTo

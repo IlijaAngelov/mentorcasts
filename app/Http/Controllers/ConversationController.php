@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Conversation;
-use http\Client\Curl\User;
-use http\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
-use JetBrains\PhpStorm\NoReturn;
 
 class ConversationController extends Controller
 {
@@ -26,25 +22,20 @@ class ConversationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $user_id = 1;
-        // validation. Inline, can be done in separate validation file!
         $validatedData = $request->validate([
             'message' => 'required|min:3|max:255',
         ]);
-        dd($validatedData, $user_id);
-        $message = Message::create($user_id, $validatedData);
+
+        Conversation::create([
+            'user_id' => Auth::id(),
+            'message' => $validatedData['message'],
+        ]);
+
+        return redirect('/conversations')->with('success', 'Message created!');
     }
 
     /**
